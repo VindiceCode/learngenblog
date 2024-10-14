@@ -1,0 +1,60 @@
+<svg width="160" height="40" viewBox="0 0 160 40" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @keyframes blink {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+    #cursor {
+      animation: blink 0.7s infinite;
+    }
+  </style>
+  <defs>
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#50E3C2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <text x="5" y="28" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="url(#textGradient)">Learn</text>
+  <text id="genText" x="80" y="28" font-family="Courier, monospace" font-size="24" font-weight="bold" fill="#4A90E2"></text>
+  <text id="cursor" x="80" y="28" font-family="Courier, monospace" font-size="24" font-weight="bold" fill="#4A90E2">|</text>
+  <text x="120" y="28" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#50E3C2">.IO</text>
+  
+  <script type="text/javascript"><![CDATA[
+    function animateText() {
+      const text = "Gen";
+      const genText = document.getElementById('genText');
+      const cursor = document.getElementById('cursor');
+      let index = 0;
+      let isDeleting = false;
+      
+      function updateText() {
+        if (!isDeleting && index <= text.length) {
+          genText.textContent = text.substring(0, index);
+          cursor.setAttribute('x', 80 + index * 14);
+          index++;
+          if (index > text.length) {
+            isDeleting = true;
+            setTimeout(updateText, 1000); // Wait before starting to delete
+          } else {
+            setTimeout(updateText, 200);
+          }
+        } else if (isDeleting && index >= 0) {
+          genText.textContent = text.substring(0, index);
+          cursor.setAttribute('x', 80 + index * 14);
+          index--;
+          if (index < 0) {
+            isDeleting = false;
+            setTimeout(updateText, 500); // Wait before restarting
+          } else {
+            setTimeout(updateText, 100);
+          }
+        }
+      }
+      
+      updateText();
+    }
+    
+    animateText();
+  ]]></script>
+</svg>

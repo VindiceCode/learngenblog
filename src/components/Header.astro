@@ -1,0 +1,151 @@
+---
+import HeaderLink from '@/components/HeaderLink'
+import GithubIcon from '@/components/icons/GithubIcon'
+import MenuIcon from './icons/MenuIcon.astro'
+import Search from '@/components/Search'
+import TagIcon from './icons/TagIcon.astro'
+import ToggleTheme from './ToggleTheme.astro'
+import LinkedinIcon from './icons/linkedinIcon.astro'
+
+// ADD YOUR SOCIAL NETWORKS HERE
+const SOCIALNETWORKS = [
+	{
+		name: 'Github',
+		url: 'https://github.com/VindiceCode',
+		icon: GithubIcon
+	},
+	{
+		name: 'LinkedIn',
+		url: 'https://www.linkedin.com/in/ian-melchor-a270b27b/',
+		icon: LinkedinIcon
+	}
+]
+---
+
+<header class='relative flex items-center h-12 font-semibold'>
+	<a class='text-lg mr-auto flex items-center' href='/'>
+		<svg width="300" height="60" viewBox="0 0 300 60" xmlns="http://www.w3.org/2000/svg">
+			<style>
+				.logo-text { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; }
+				#cursor { animation: blink 0.7s infinite; }
+				@keyframes blink { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+			</style>
+			
+			<defs>
+				<linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+					<stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+					<stop offset="100%" style="stop-color:#50E3C2;stop-opacity:1" />
+				</linearGradient>
+			</defs>
+
+			<text id="learnText" x="10" y="40" class="logo-text" fill="url(#textGradient)">Learn</text>
+			<text id="dynamicText" x="90" y="40" class="logo-text" fill="#FFFFFF"></text>
+			<text id="ioText" x="90" y="40" class="logo-text" fill="#50E3C2">.IO</text>
+			<text id="cursor" x="90" y="40" class="logo-text" fill="#FFFFFF">|</text>
+		</svg>
+	</a>
+
+	<div class='flex justify-center items-center md:justify-end gap-3 md:p-0'>
+		{
+			SOCIALNETWORKS.map((network) => (
+				<HeaderLink class='' href={network.url} target='_blank' aria-label={network.name}>
+					<span>{<network.icon />} </span>
+				</HeaderLink>
+			))
+		}
+	</div>
+
+	<div class='flex items-center gap-3 md:pl-3' transition:persist='navbar'>
+		<div>
+			<Search />
+		</div>
+		<ToggleTheme />
+		<button id='astro-header-drawer-button' type='button' class='md:ml-6 md:hidden'>
+			<MenuIcon />
+			<span class='sr-only'>Show Menu</span>
+		</button>
+	</div>
+</header>
+
+<script>
+	document.addEventListener('click', (event) => {
+		const menu = document.getElementById('astro-header-drawer')
+		const menuButton = document.getElementById('astro-header-drawer-button')
+		const isClickInside =
+			menu?.contains(event.target as HTMLDivElement) ||
+			menuButton?.contains(event.target as HTMLButtonElement)
+
+		if (isClickInside) {
+			menu?.classList.toggle('translate-x-96')
+		} else {
+			menu?.classList.add('translate-x-96')
+		}
+	})
+
+	const phrases = [
+		"Gen",
+		"SomethingNew",
+		"AboutYourself",
+		"BecauseItsFun",
+		"ToBe",
+		"Learning"
+	];
+	
+	function isSVGTextElement(element: HTMLElement | null): element is SVGTextElement {
+		return element instanceof SVGTextElement;
+	}
+
+	const learnText = document.getElementById('learnText');
+	const dynamicText = document.getElementById('dynamicText');
+	const ioText = document.getElementById('ioText');
+	const cursor = document.getElementById('cursor');
+	let currentPhraseIndex = 0;
+
+	function sleep(ms: number) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	function updatePositions() {
+		if (!isSVGTextElement(learnText) || !isSVGTextElement(dynamicText) || !isSVGTextElement(cursor) || !isSVGTextElement(ioText)) return;
+		const learnWidth = learnText.getComputedTextLength();
+		const dynamicWidth = dynamicText.getComputedTextLength();
+		dynamicText.setAttribute('x', (10 + learnWidth + 5).toString()); // Convert number to string
+		cursor.setAttribute('x', (10 + learnWidth + dynamicWidth + 5).toString());
+		ioText.setAttribute('x', (10 + learnWidth + dynamicWidth + 5).toString());
+	}
+
+	async function typeText(text: string) {
+		if (!isSVGTextElement(dynamicText)) return;
+		for (let i = 0; i <= text.length; i++) {
+			dynamicText.textContent = text.substring(0, i);
+			updatePositions();
+			await sleep(100);
+		}
+	}
+
+	async function deleteText() {
+		if (!isSVGTextElement(dynamicText)) return;
+		const text = dynamicText.textContent || '';
+		for (let i = text.length; i >= 0; i--) {
+			dynamicText.textContent = text.substring(0, i);
+			updatePositions();
+			await sleep(50);
+		}
+	}
+
+	async function animateLoop() {
+		while (true) {
+			await typeText(phrases[0]); // Always start with "Gen"
+			await sleep(5000); // LearnGen.IO displayed for 5 seconds
+			await deleteText();
+			currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+			if (currentPhraseIndex === 0) currentPhraseIndex = 1; // Skip "Gen" in the rotation
+			await typeText(phrases[currentPhraseIndex]);
+			await sleep(3000); // Alternative phrase displayed for 3 seconds
+			await deleteText();
+		}
+	}
+
+	updatePositions(); // Initial positioning
+	animateLoop();
+</script>

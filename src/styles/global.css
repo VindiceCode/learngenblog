@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+  }
+
+  img {
+    @apply max-w-full h-auto;
+  }
+
+  .prose {
+    @apply w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .prose code {
+    @apply text-base bg-gray-100 dark:bg-gray-800 rounded px-1 transition-all duration-200;
+  }
+
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    @apply text-gray-800 dark:text-gray-100 font-semibold;
+  }
+
+  .prose a {
+    @apply text-blue-600 dark:text-blue-400 underline transition-colors duration-300;
+  }
+
+  .prose a:hover {
+    @apply text-blue-800 dark:text-blue-200 transform scale-105;
+  }
+
+  .prose p {
+    @apply mb-4;
+  }
+
+  .prose ul,
+  .prose ol {
+    @apply mb-4 pl-6;
+  }
+
+  .prose li {
+    @apply mb-2;
+  }
+
+  html.dark .shiki,
+  html.dark .shiki span {
+    color: var(--shiki-dark) !important;
+    background-color: theme(colors.gray.900) !important;
+  }
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.shadow {
+  @apply shadow-md;
+}
+
+.container {
+  @apply w-full max-w-screen-xl mx-auto px-4;
+}
+
+@media (max-width: 768px) {
+  body {
+    @apply text-sm;
+  }
+
+  h1 {
+    @apply text-2xl;
+  }
+
+  h2 {
+    @apply text-xl;
+  }
+
+  h3 {
+    @apply text-lg;
+  }
+}

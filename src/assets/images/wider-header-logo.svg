@@ -1,0 +1,27 @@
+<svg width="200" height="40" viewBox="0 0 200 40" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @keyframes blink {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+    #cursor {
+      animation: blink 0.7s infinite;
+    }
+    .logo-text {
+      font-family: Arial, sans-serif;
+      font-size: 24px;
+      font-weight: bold;
+    }
+  </style>
+  <defs>
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#50E3C2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <text x="5" y="28" class="logo-text" fill="url(#textGradient)">Learn</text>
+  <text id="cursor" x="80" y="28" class="logo-text" fill="#4A90E2">|</text>
+  <text id="dynamicText" x="85" y="28" class="logo-text" fill="#4A90E2"></text>
+  <text x="160" y="28" class="logo-text" fill="#50E3C2">.IO</text>
+</svg>

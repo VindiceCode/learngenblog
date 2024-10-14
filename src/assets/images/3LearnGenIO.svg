@@ -1,0 +1,35 @@
+<svg width="360" height="80" viewBox="0 0 360 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#50E3C2;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Subtle background element -->
+  <path d="M10 40 Q 50 20, 90 40 T 170 40 T 250 40 T 330 40" 
+        fill="none" 
+        stroke="url(#textGradient)" 
+        stroke-width="0.5" 
+        opacity="0.3"/>
+  
+  <!-- Main text -->
+  <text x="30" y="50" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="url(#textGradient)" filter="url(#shadow)">
+    Learn
+  </text>
+  
+  <!-- Gen text -->
+  <text x="130" y="50" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#FFFFFF" filter="url(#shadow)">
+    Gen
+  </text>
+  
+  <!-- .IO text -->
+  <text x="190" y="50" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#50E3C2" filter="url(#shadow)">
+    .IO
+  </text>
+  
+
+</svg>
